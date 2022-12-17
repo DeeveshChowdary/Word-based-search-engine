@@ -1,20 +1,20 @@
-from app.constants.global_constants import GC
+from app.constants import GC
 import os
 import json
 
-from app.services.app_service import AppService
+from app.service import AppService
 
 
 class InitializeApp:
 
     def __init__(self):
 
-        GC.INDEXEDWORDS = self.loadIndex()
+        GC.INDICES = self.loadIndex()
 
     def loadIndex(self):
 
         index_file_path = os.path.join(os.path.join(
-            os.getcwd(), GC.DATASET_FOLDER), GC.JSON_FILE)
+            os.getcwd(), GC.DATASET), GC.JSFILE)
 
         print(index_file_path)
 
@@ -26,7 +26,7 @@ class InitializeApp:
                 index_file = json.load(idxfile)
             except:
                 print("Index File is Blank or of wrong format, Trying to index it")
-                if AppService().isIndexed():
+                if AppService().isProcessed():
                     print("Indexed Successfully")
                 else:
                     print("Cant Index")

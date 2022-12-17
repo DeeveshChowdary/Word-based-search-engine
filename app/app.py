@@ -1,9 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
-
+from app.api import blueprint
 from werkzeug.middleware.proxy_fix import ProxyFix
-from app.initializers.InitializeApp import InitializeApp
-from app.initializers.register_all_blueprints import RegisterBlueprints
+from app.initapp import InitializeApp
 import os
 # from initializers.register_all_blueprints import RegisterBlueprints
 
@@ -17,7 +16,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_port=1)
 
 # RegisterBlueprints(app, db)
 CORS(app)
-RegisterBlueprints(app)
+app.register_blueprint(blueprint)
 InitializeApp()
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
 # port = int(os.environ.get("PORT", 5002))
